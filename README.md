@@ -47,9 +47,20 @@ in Internet Explorer on Windows 7 for instance (because of the wrong MIME type).
 
 JavaScript Cookie supports [npm](https://www.npmjs.com/package/js-cookie) and [Bower](http://bower.io/search/?q=js-cookie) under the name `js-cookie`.
 
+#### NPM
+```
+  $ npm install js-cookie --save
+```
+
 ### Module Loaders
 
 JavaScript Cookie can also be loaded as an AMD, CommonJS or [ES6](https://github.com/js-cookie/js-cookie/issues/233#issuecomment-233187386) module.
+
+#### ES6
+
+```javascript
+import Cookies from 'js-cookie';
+```
 
 ## Basic Usage
 
@@ -98,9 +109,9 @@ Cookies.remove('name'); // fail!
 Cookies.remove('name', { path: '' }); // removed!
 ```
 
-*IMPORTANT! when deleting a cookie, you must pass the exact same path and domain attributes that was used to set the cookie, unless you're relying on the [default attributes](#cookie-attributes).*
+*IMPORTANT! When deleting a cookie, you must pass the exact same path and domain attributes that were used to set the cookie, unless you're relying on the [default attributes](#cookie-attributes).*
 
-*Note: Removing unexisting cookie does not raise any exception nor return any value*
+*Note: Removing a nonexistent cookie does not raise any exception nor return any value.*
 
 ## Namespace conflicts
 
@@ -192,7 +203,9 @@ Cookies.remove('name', { path: '' });
 
 (From [Internet Explorer Cookie Internals (FAQ)](http://blogs.msdn.com/b/ieinternals/archive/2009/08/20/wininet-ie-cookie-internals-faq.aspx))
 
-This means one cannot set a path using `path: window.location.pathname` in case such pathname contains a filename like so: `/check.html` (or at least, such cookie cannot be read correctly).
+This means one cannot set a path using `window.location.pathname` in case such pathname contains a filename like so: `/check.html` (or at least, such cookie cannot be read correctly).
+
+In fact, you should never allow untrusted input to set the cookie attributes or you might be exposed to a [XSS attack](https://github.com/js-cookie/js-cookie/issues/396).
 
 ### domain
 
